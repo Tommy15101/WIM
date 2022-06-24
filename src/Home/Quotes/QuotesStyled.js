@@ -4,26 +4,13 @@ export const QuotesContainer = styled.div`
     grid-row-start: 2;
     grid-row-end: 4;
     border: 2px solid blue;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
     border-radius: 10px;
     box-shadow: 5px 8px 20px blue;
-    display: flex;
-    flex-direction: column-reverse;
-    align-itmes: center;
-    justify-content: space-evenly;
+    background-color: aliceblue;
     padding: 20px;
     margin-top: 20px;
-    cite {
-        word-spacing: 5px;
-        letter-spacing: 2px;
-    }
-`
-export const PrayIcon = styled.div`
-    color: blue;
-    font-size: 50px;
-    position: absolute;
-    bottom: 30px;
-    right: 50px;
 `

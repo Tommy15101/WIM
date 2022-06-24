@@ -9,6 +9,7 @@ export const MusicContainer = styled.div`
     border: 2px solid green;
     border-radius: 10px;
     box-shadow: 5px 8px 20px #1DB954;
+    background-color: aliceblue;
 `
 export const SpotifyLogo = styled.div`
     height: 100%;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 /* NAVBAR CONTAINER */
 export const NavbarWrapper = styled.div`
-    width: 100vw;
+    max-width: 100vw;
     height: 10vh;
     background-color: navy;
     display: grid;
@@ -41,16 +41,22 @@ export const NavbarRight = styled.div`
     justify-content: space-evenly;
 `
 export const NavbarRightFullCell = styled.div`
-    height: 100%;
-    width: 100%;
+    height: auto;
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 25px;
     transition: all .2s ease;
+    padding: 5px;
+    border-radius: 8px;
     cursor: pointer;
     &:hover {
         transform: scale(1.1);
+        background-color: white;
+        a{ 
+            color: blue;
+        }
     }
     a {
         color: white;
