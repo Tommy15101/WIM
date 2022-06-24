@@ -19,7 +19,6 @@ useEffect(() => {
     axios.request(options).then(function (response) {
       let joke = response.data.body[0]
         setJoke(joke)
-        console.log(joke);
     }).catch(function (error) {
         console.error(error);
     });

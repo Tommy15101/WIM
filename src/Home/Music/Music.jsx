@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { MusicContainer, SpotifyLogo, SpotifyTitle, SpotifyLogButton, SubTitle , MusicControlls, ArtistSong, PleaseLogin} from './MusicStyled'
+import { MusicContainer, SpotifyLogo, SpotifyTitle, SpotifyLogButton, SubTitle , MusicControlls, PleaseLogin, SpotifyUser} from './MusicStyled'
 import { BsSpotify } from 'react-icons/bs'
-import ReactPlayer from "react-player";
+import SpotifyPlayer from 'react-spotify-web-playback'
 
 export const Music = () => {
 
@@ -11,6 +11,7 @@ export const Music = () => {
   const REDIRECT_URI = "http://localhost:3000/"
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
+  const SCOPE = "streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state"
   /* ----- STATE ----- */
   const [ token, setToken ] = useState("");
   const [ currentArtist, setCurrentArtist ] = useState([]);
@@ -33,28 +34,23 @@ export const Music = () => {
     setToken(token)
     /* ----- PLAYLIST SPOTIFY REQUEST ----- */
     if(token) {
-      axios.get("https://api.spotify.com/v1/playlists/4YmiHp5tPr3Gy3L4TMMOnd", {
+      axios.get("https://api.spotify.com/v1/playlists/6lWu3fX3OhF8hlPIxuGbVZ", {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
         .then(response => {
-          console.log(response.data) // All Data
 
-          console.log(response.data.tracks.items[0].track.artists[0].name) // Artist Name
           let currentArtist = response.data.tracks.items[0].track.artists[0].name;
           setCurrentArtist(currentArtist)
 
-          console.log(response.data.tracks.items[0].track.name) // Song Name
           let currentSong = response.data.tracks.items[0].track.name;
           setCurrentSong(currentSong)
 
-          console.log(response.data.images[0].url) // Album Image
           let albumImage = response.data.images[0].url;
           setAlbumImage(albumImage)
 
-          console.log(response.data.tracks.items[0].track.preview_url);
-          let playTrack = response.data.tracks.items[0].track.preview_url;
+          let playTrack = response.data.uri;
           setPlayTrack(playTrack)
       })
 
@@ -65,9 +61,6 @@ export const Music = () => {
         }
       })
         .then(response => {
-          // console.log(response.data)
-          console.log(response.data.display_name) // Users Name
-
           let currentUser = response.data.display_name;
           setCurrentUser(currentUser)
       })
@@ -88,29 +81,24 @@ export const Music = () => {
       
       <SpotifyLogButton>
       {!token ? 
-        <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}><button>Login</button></a>
+        <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`}><button>Login</button></a>
         :
-        <button onClick={logout}><p>{currentUser}</p>Log Out</button>
+        <button onClick={logout}>Log Out</button>
       }
       </SpotifyLogButton>
       
-      <SubTitle><h3>Most Played Tunes</h3></SubTitle>
+      <SubTitle><h3>{token ? "Most Played Tunes" : ""}</h3></SubTitle>
       {token ?
         <>
           <MusicControlls>
-            <ReactPlayer 
-              url={playTrack}
-              width="70%"
-              height="50px"
-              controls={true}
-              playing={false}
+            <SpotifyPlayer 
+              token={token}
+              uris={playTrack ? [playTrack] : []}
             />
           </MusicControlls>
-          <ArtistSong>
-            <h3>{currentArtist}</h3>
-            <h3>{currentSong}</h3>
-            <img src={albumImage} alt=""/>
-          </ArtistSong>
+          <SpotifyUser>
+            <p>{currentUser} Spotify Premium</p>
+          </SpotifyUser>
         </>
       :
       <PleaseLogin>

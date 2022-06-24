@@ -19,7 +19,6 @@ export const Wisdom = () => {
     axios.request(options).then(function (response) {
       let quote = response.data[1];
       setQuote(quote)
-      console.log(quote)
     }).catch(function (error) {
       console.error(error);
     });  

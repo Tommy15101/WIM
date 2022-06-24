@@ -77,7 +77,7 @@ export const MusicControlls = styled.div`
     background-color: white;
     color: #1DB954;
 `
-export const ArtistSong = styled.div`
+export const SpotifyUser = styled.div`
     grid-column-start: 1;
     grid-column-end: 4;
     display: flex;
@@ -86,12 +86,8 @@ export const ArtistSong = styled.div`
     background-color: #1DB954;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-    h3 {
+    p {
         color: white;
-    }
-    img {
-        width: 50px;
-        border-radius: 8px;
     }
 `
 export const PleaseLogin = styled.div`
